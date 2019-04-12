@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
+import com.treabear.webservice.domain.BaseTimeEntity;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
-public class Posts {
+public class Posts extends BaseTimeEntity {
 
     @Id
     @GeneratedValue
@@ -40,12 +42,5 @@ public class Posts {
         this.title = title;
         this.content = content;
         this.author = author;
-    }
-
-    @Override
-    public String toString(){
-        return "<Posts> title: " + this.title + ", content: " + this.content + ", author: " + this.author;
-    }
-
-    
+    }    
 }
