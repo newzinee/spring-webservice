@@ -1,7 +1,8 @@
 package com.treabear.webservice.web;
 
+import com.treabear.webservice.domain.dto.PostsSaveRequestDto;
 import com.treabear.webservice.domain.posts.PostsRepository;
-import com.treabear.webservice.domain.posts.PostsSaveRequestDto;
+import com.treabear.webservice.service.PostsService;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ import lombok.AllArgsConstructor;
 public class WebRestController {
 
     private PostsRepository postsRepository;
+    private PostsService postsService;
 
     @GetMapping("/hello")
     public String hello() {
@@ -31,9 +33,7 @@ public class WebRestController {
     }
 
     @PostMapping("/posts")
-    public void savePosts(@RequestBody PostsSaveRequestDto dto) {
-        System.out.println(dto.getTitle());
-        System.out.println(dto.toEntity());
+    public Long savePosts(@RequestBody PostsSaveRequestDto dto) {
         // 테스트 완료 후, DB에 값이 들어가는지 확인을 위한 API
         /*
             {
@@ -42,7 +42,7 @@ public class WebRestController {
                 "author": "테스터"
             }
         */
-        postsRepository.save(dto.toEntity());
+        return postsService.save(dto);
     }
     
 }
