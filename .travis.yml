@@ -20,5 +20,6 @@ notifications:
     recipients:
       - qvo7896@gmail.com 
 
+# Travis CI gradlew permission 추가
 before_install:
  - chmod +x gradlew
