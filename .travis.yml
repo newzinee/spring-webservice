@@ -18,6 +18,11 @@ cache:
 
 script: "./gradlew clean build"
 
+before_deploy:
+  - zip -r spring-webservice *
+  - mkdir -p deploy
+  - mv spring-webservice.zip deploy/spring-webservice.zip
+
 # Taravis CI가 build한 결과물을 받아서 CodeDeploy가 가져갈 수 있도록 보관할 수 있는 공간이 필요 -> AWS S3 이용
 deploy:
   - provider: s3
@@ -27,6 +32,7 @@ deploy:
     region: ap-northeast-2
     skip_cleanup: true
     acl: public_read
+    local_dir: deploy # before_deploy에서 생성한 디렉토리
     wait-until-deployed: true
     on:
       repo: treasureBear94/spring-webservice #Github 주소
@@ -37,4 +43,5 @@ notifications:
   email:
     recipients:
       - qvo7896@gmail.com 
-
+  slack:
+    on_success: always
