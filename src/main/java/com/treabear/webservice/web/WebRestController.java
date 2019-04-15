@@ -1,9 +1,12 @@
 package com.treabear.webservice.web;
 
+import java.util.Arrays;
+
 import com.treabear.webservice.domain.dto.PostsSaveRequestDto;
 import com.treabear.webservice.domain.posts.PostsRepository;
 import com.treabear.webservice.service.PostsService;
 
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,8 +27,16 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class WebRestController {
 
-    private PostsRepository postsRepository;
     private PostsService postsService;
+    private Environment env;
+
+    @GetMapping("/profile")
+    public String getProfile() {
+        // 프로젝트의 환경설정 값을 다루는 Environment Bean을 DI받아 활성화된 profile을 반환하는 코드.
+        return Arrays.stream(env.getActiveProfiles())
+                    .findFirst()
+                    .orElse("");
+    }
 
     @GetMapping("/hello")
     public String hello() {
